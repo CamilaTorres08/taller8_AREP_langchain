@@ -17,46 +17,11 @@ Este repositorio contiene la implementación del tutorial básico de LangChain, 
 
 ### Arquitectura del Sistema
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      Usuario/Cliente                         │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    LangChain Agent                           │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │         LLM (GPT-4) + System Prompt                   │  │
-│  └───────────────────────────────────────────────────────┘  │
-│                           │                                  │
-│                           ▼                                  │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │              Tools (Herramientas)                      │  │
-│  │    - retrieve_context: Búsqueda en Vector Store       │  │
-│  └───────────────────────────────────────────────────────┘  │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│              InMemory Vector Store                           │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │    Embeddings (OpenAI text-embedding-3-large)         │  │
-│  │    - 63 documentos divididos                          │  │
-│  │    - Búsqueda por similitud semántica                 │  │
-│  └───────────────────────────────────────────────────────┘  │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│                  Fuente de Datos                             │
-│    Web Scraping: Blog Post sobre Agentes LLM                │
-│    (https://lilianweng.github.io/posts/2023-06-23-agent/)   │
-└─────────────────────────────────────────────────────────────┘
-```
+<img src="diagrama.png" />
 
 ### Flujo de Datos
 
-1. **Carga de Datos**: Se extrae contenido de una página web usando `WebBaseLoader`
+1. **Carga de Datos**: Se extrae contenido 
 2. **Procesamiento**: El texto se divide en chunks usando `RecursiveCharacterTextSplitter`
 3. **Vectorización**: Cada chunk se convierte en embeddings usando OpenAI
 4. **Almacenamiento**: Los vectores se guardan en un `InMemoryVectorStore`
